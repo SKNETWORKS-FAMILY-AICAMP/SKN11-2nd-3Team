@@ -258,13 +258,16 @@
 
      
 ---
-### 인공지능 학습 결과
+# 인공지능 학습 결과
 
-#### 하이퍼 파라미터 (RandomSearchCV)
-- 대용량 데이터를 학습하는데 시간이 많이 소요되어 RandomSearchCV 사용
-![Image](https://github.com/user-attachments/assets/c38f7bed-00b1-4e97-9669-459c3e3aa0d9) 
 
 ## RandomizedSearchCV를 사용하여 최적의 하이퍼 파라미터 확인 후 적용
+
+- 최초로 GridSearch 를 통해 하이퍼파라미터를 찾으려고 시도하였으나 데이터 전처리 과정에서 시간이 많이 소요 되어 최소한의 시간으로 최적의 하이퍼 파라미터를 찾기 위해 RandomSearchCV 사용
+
+![Image](https://github.com/user-attachments/assets/c38f7bed-00b1-4e97-9669-459c3e3aa0d9) 
+
+![최적의 하이퍼 파라미터 결과](./readme_img/hyperparam.png)
 
 | Model               | Accuracy (Before → After) | Precision (Before → After) | Recall (Before → After) | F1 Score (Before → After) | ROC AUC (Before → After) |
 |--------------------|---------------------|----------------------|----------------|-----------------|----------------|
@@ -273,17 +276,19 @@
 | **XGBoost**           | 0.8623 → 0.8907  | 0.7565 → 0.8243  | 0.6613 → 0.7145 | 0.7057 → 0.7655  | 0.9225 → 0.9460 |
 | **LightGBM**          | 0.8636 → 0.8808  | 0.7794 → 0.8180  | 0.6329 → 0.6721 | 0.6985 → 0.7379  | 0.9237 → 0.9388 |
 
-### 최적의 하이퍼 파라미터
-![](https://github-production-user-asset-6210df.s3.amazonaws.com/112079783/428911564-841f452a-87ea-4e26-9352-06369ea47d06.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20250401%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250401T080154Z&X-Amz-Expires=300&X-Amz-Signature=5a85d67250512c37af7f0f71eecd7c4c7d8da581f181e83099f4255ed12f987b&X-Amz-SignedHeaders=host)
 
-#### 튜닝 후 모델별 성능 비교
+
+## 하이퍼 파라미터 튜닝 후 각 모델별 성능 비교 그래프
 ![Image](https://github.com/user-attachments/assets/fca649a4-26c2-49ed-9b8f-11068556577e)
-#### 튜닝 후 ROC - CURVE
+## 하이퍼 파라미터 튜닝 후 각 모델별 ROC - CURVE
 ![Image](https://github.com/user-attachments/assets/798780aa-350f-4db3-9e91-d3b3eae4b690)
-#### 모델 별 예측 데이터 수 
+## 각 모델 별 혼동 행렬
 ![Image](https://github.com/user-attachments/assets/181a7dc1-1ef8-453d-942f-55833b46a0f1) 
 
-- 평가지표, ROC - CURVE 의 결과를 토대로 최종 모델을 **RandomForest**로 선정
+# 최종 학습 모델 선정
+```
+평가지표, ROC - CURVE 의 결과를 토대로 최종 모델로 RandomForest를 선정
+```
 
 #### 특성 중요도 
 <img src="./readme_vi//feature_importances.png">
