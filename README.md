@@ -94,6 +94,12 @@
         - `is_cancel`: 구독 취소 여부
 
 4.  user_logs.csv / user_logs_v2.csv
+  1. user로그 파일 28GB → 1.1GB 26개로 분리  
+  2. member 테이블 라벨인코딩을 통해 key-value로 JSON 형태로 저장  
+  3. 분리된 파일의 user_log 데이터를 msno를 바탕으로 매핑  
+  4. 각 user_log 내에 중복되는 userId 값을 Groupby하여 중복 제거  
+   - use_date(노래를 들은 날짜), start_date(처음 들은 날), end_date(마지막 들은 날) 컬럼 추가  
+  5. 모든 user_log를 하나로 합친 후 다시 Groupby하여 4번과 동일한 과정 진행  
 
 
 
@@ -175,9 +181,6 @@ actual_amount_paid_sum 값이 0 초과인 데이터만 추출(기간 동안 총 
     
 결과 : final_processed_transactions.csv  데이터 개수 : 19919598 -> 1551863<br/><br/><br/>
 
-
-##### user_logs.csv 에 대한 전처리 내용 
-![Image](https://github.com/user-attachments/assets/d06ce70c-0ca1-4ef6-81e5-e041a3b0b1bf)
 
 ##### members_v3.csv 에 대한 전처리 내용 
     
