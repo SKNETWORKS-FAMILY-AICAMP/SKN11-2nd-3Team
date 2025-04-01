@@ -217,7 +217,7 @@
 
 
 
-## 판단 기준
+## 참고 자료
 1. [최적 샘플링 비율 탐색을 통한 불균형 자료 문제 해결 방안](https://www.dbpia.co.kr/journal/detail?nodeId=T15485105)
 2. [불균형 데이터에 대한 오버샘플링 효과 연구](https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART001273099)
  
