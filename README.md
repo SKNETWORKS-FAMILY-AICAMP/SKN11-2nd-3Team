@@ -273,6 +273,8 @@
 | **XGBoost**           | 0.8623 → 0.8907  | 0.7565 → 0.8243  | 0.6613 → 0.7145 | 0.7057 → 0.7655  | 0.9225 → 0.9460 |
 | **LightGBM**          | 0.8636 → 0.8808  | 0.7794 → 0.8180  | 0.6329 → 0.6721 | 0.6985 → 0.7379  | 0.9237 → 0.9388 |
 
+### 최적의 하이퍼 파라미터
+![](https://github-production-user-asset-6210df.s3.amazonaws.com/112079783/428911564-841f452a-87ea-4e26-9352-06369ea47d06.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20250401%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250401T080154Z&X-Amz-Expires=300&X-Amz-Signature=5a85d67250512c37af7f0f71eecd7c4c7d8da581f181e83099f4255ed12f987b&X-Amz-SignedHeaders=host)
 
 #### 튜닝 후 모델별 성능 비교
 ![Image](https://github.com/user-attachments/assets/fca649a4-26c2-49ed-9b8f-11068556577e)
