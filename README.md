@@ -333,7 +333,7 @@
 - 평가지표, ROC - CURVE 의 결과를 토대로 최종 모델을 **RandomForest**로 선정
 
 #### 특성 중요도 
-![Image](https://github.com/user-attachments/assets/c8f43974-9b86-41ba-b922-53192a6fec95)
+<img src="./readme_vi//feature_importances.png">
 
 
 ---
