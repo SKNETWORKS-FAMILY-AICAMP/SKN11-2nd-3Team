@@ -34,13 +34,13 @@
 
 ---
 ##  🎯 프로젝트 개요
-### 📅 개발 기간
+## 📅 개발 기간
 **2025.03.31 ~ 2025.04.01 (총 2일)**
 
-### **프로젝트 목표**
+## **프로젝트 목표**
 - KKBox(대만 음악 스트리밍 서비스) 사용자의 **이탈 여부(is_churn)** 를 예측하는 모델을 개발하여, KKBox 사용자의 이탈 방지를 효과적으로 수행하여 수익 향상에 기여함을 목적으로 함.
 
-### **기대효과**:
+## **기대효과**:
 
  1. **수익 손실 방지**  
    신규 고객 확보 비용은 기존 고객을 유지하는 비용보다 높음. 따라서 기존 고객의 이탈을 줄이는 것이 비용적인 면에서 효율적.
@@ -60,7 +60,7 @@
    
 
 
-### WBS
+## WBS
 
 | 내용                     | 기간                  | 담당            |
 |--------------------------|----------------------|---------------|
@@ -78,7 +78,7 @@
 ## 📂데이터 구성
 ### - 데이터소스: [WSDM - KKBox의 Churn Prediction Challenge](https://www.kaggle.com/c/kkbox-churn-prediction-challenge/overview)
 
-#### [ DataSet ]
+### [ DataSet ]
 
 1. members_v3.csv [유저 테이블]
     - **설명**: 유저의 프로필 정보
@@ -122,7 +122,7 @@
       - `num_unq`: 청취한 노래의 개수
       - `total_secs`: 총 재생 시간(초)
 
-### 기술 스택
+## 기술 스택
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white">
   <img src="https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=vscode&logoColor=white">
@@ -137,7 +137,7 @@
 
 <hr>
 
-### EDA
+## EDA
 #### 이상치 확인
 
 <img src="./readme_vi//box_plot_for_all.png">
