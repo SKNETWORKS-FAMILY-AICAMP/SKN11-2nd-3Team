@@ -3,12 +3,12 @@
 <table>
   <thead>
     <td align="center">
-        <img src="" width="150" alt="jangsoo"/><br /><hr/>
+        <img src="./readme_img//git_img_jangsu.png" height="150" width="150" alt="jangsoo"/><br /><hr/>
         김장수
       </a><br />
     </td>
     <td align="center">
-        <img src="" width="150" alt="Sungil"/><br /><hr/>
+        <img src="./readme_img//git_img_sunill.png" height="150" width="150" alt="Sungil"/><br /><hr/>
         방성일
       </a><br />
     </td>
@@ -93,6 +93,7 @@
         - `membership_expire_date`: 회원 만료일 (`%Y%m%d`)
         - `is_cancel`: 구독 취소 여부
 
+
 4.  user_logs.csv / user_logs_v2.csv
  
 
@@ -116,102 +117,22 @@
 #### 1. 데이터 전처리<br/>
 ![Image](https://github.com/user-attachments/assets/fe0b94b1-b6eb-49e7-aa27-33c52aac836d)
 #### transaction_v2.csv 에 대한 전처리 내용
-- transaction_date_check.py
-  
-캐글의 데이터 설명에 명시된 내용을 보면 transaction.csv 파일은 2017년 02월 28일 까지의 거래 기록, transaction_v2.csv 파일은 그 이후로 2017년 03월 31일 까지의 거래 기록으로 확인된다.<br/>
-하지만 transaction_v2.csv 파일의 'transaction_date' 컬럼을 보면 거래일자가 20170228~20170331 이외의 데이터들이 섞여있어서 이상치로 판단 후 제거<br/>
-    
-결과 : filtered_transactions_v2.csv 데이터 개수 : 1431009  -> 1150924<br/><br/><br/>
+### user_log 데이터 전처리  
+1. 28GB였던 유저 로그 데이터를 1.1GB 크기의 26개 파일로 분리  
+2. member 테이블을 라벨인코딩하여 key-value 형태의 JSON으로 저장  
+3. 분리된 파일의 user_log 데이터를 `msno`를 기준으로 매핑  
+4. 각 user_log 내 중복되는 `userId`를 Groupby하여 중복 제거  
+   - 이후, `use_date`(노래를 들은 날짜), `start_date`(처음 들은 날), `end_date`(마지막 들은 날) 컬럼 추가  
+5. 모든 user_log를 하나로 합친 후 다시 Groupby하여 4번과 동일한 과정 진행  
 
-- labelmapping.py
+### transaction 데이터 전처리  
+1. 거래 기록 이후의 추가 기록이 확인되어 이상치로 판단 후 제거  
+2. 유저 정보 중 아이디가 없는 데이터 제거  
+3. 결제일이 멤버십 만료일 이후인 데이터 제거  
 
-msno 값을 label 인코딩 해둔 members_encoded.csv 파일을 불러와 filtered_transactions_v2.csv 파일에 적용하여<br/>
-msno 값을 숫자로 변환하고, members_v3.csv (유저정보) 에 없는 msno 값을 가진 데이터를 제거<br/>
+### members 데이터 전처리  
+1. `gender` 컬럼의 결측치가 70% 이상으로 확인되어 컬럼 제거  
 
-결과 : filter_and_labeled_transactions_v2.csv 데이터 개수 : 1150924 -> 1027895<br/><br/><br/>
-
-    
-##### transaction.csv 에 대한 전처리 내용 
-- labelmapping.py
-msno 값을 label 인코딩 해둔 members_encoded.csv 파일을 불러와 filtered_transactions.csv 파일에 적용<br/>
-msno 값을 숫자로 변환하고, members_v3.csv (유저정보) 에 없는 msno 값을 가진 데이터를 제거<br/>
-
-결과 : labeled_transactions.csv 데이터 개수 : 21547745 -> 18891703<br/><br/><br/>
-
-
-- concat.py
-    
-filter_and_labeled_transactions_v2.csv 와 labeled_transactions.csv 를 concat<br/>
-    
-결과 : merged_transactions.csv 데이터 개수 : 1027895 + 18891703 -> 19919598<br/><br/><br/>
-
-
-- merged_transactions_preprocessing.py
-
-merged_transactions.csv 에서 transaction_date 가 membership_expire_date 보다 큰 값(이상치) 제거. 
-
-결과 :  final_merged_transactions.csv 데이터 개수 : 19919598  -> 19779157<br/><br/><br/>
-
-
-- transaction_processing.py
-    
-final_merged_transactions.csv 에서 msno_encoded의 타입을 int 형으로 바꾸고 컬럼명을 'msno'로 저장 후, msno_encoded 컬럼 제거.
-
-merged_transactions.csv 파일의 컬럼 중.
-1)payment_list_price 보다 actual_amount_paid 가 큰 데이터 들을 제거
-2)payment_plan_id 컬럼 제거
- 
-msno_encoded를 기준으로 그룹화 해서
-
-0)transaction_date 값 중 max 값을 저장. 
-1)거래 횟수를 저장해두는 transaction_count 컬럼 생성
-2)is_cancel 의 수를 저장해두는 is_cancel_sum 컬럼 생성
-3)is_cancel 의 평균을 저장해두는 is_cancel_mean 컬럼 생성
-4)actual_amount_paid의 총합을 저장하는 actual_amount_paid_sum 컬럼 생성
-5)is_auto_renew 의 평균을 저장한 is_auto_renew_mean 컬럼 생성
-6)is_cancel == 0 인 데이터만 필터링하여 plan_days_sum 컬럼 생성 (구독 취소하는 경우의 plan_days를 세지 않기 위함)
-
-추가)  
-actual_amount_paid_sum 값이 0 초과인 데이터만 추출(기간 동안 총 결제 금액이 0인 유저 제거 위함)
-    
-결과 : final_processed_transactions.csv  데이터 개수 : 19919598 -> 1551863<br/><br/><br/>
-
-
-##### members_v3.csv 에 대한 전처리 내용 
-    
-- member_preprocessing.py
-members_encoded2.csv(members_v3 파일에서 msno값을 labelencoding 한 데이터)의 데이터 개수가 6769473, 이중 gender의 결측치가  4429505 개로 확인되어 gender 컬럼 제거 
-
-결과 : final_members.csv 
-
-데이터 개수 : 6769473<br/><br/><br/>
-
-
-##### members_v3.csv + final_processed_transactions.csv 병합 후 전처리
-- merge_transac+member.py
-final_members.csv 파일과 final_processed_transactions.csv 파일을 msno를 기준으로 병합 
-
-결과 :  merged_member_transaction_data.csv 
-
-데이터 개수 : 1551864<br/><br/><br/>
-
-
-- preprocessing_member_transaction.py
-registration_init_time > transaction_date_max 인 데이터 제거 
-
-결과 :  데이터 개수 : 1551863 -> 1340063<br/><br/><br/>
-
-
-##### train_encoded.csv + final_merged_member_transaction_data.csv + user_logs_encoded_merged_all.csv 병합
--merge_final.py
-train_encoded.csv + final_merged_member_transaction_data.csv + user_logs_encoded_merged_all.csv 세 개의 파일을 'msno' 기준으로 병합
-
-결과 : realrealreal_final_data.csv  
-
-데이터 개수 : 839941<br/><br/><br/>
-
-    
--rrrr_final.py
 <br/>
 ![Image](https://github.com/user-attachments/assets/8986b43f-0997-46bb-8ff8-6f33ffddd47b)
 <br/>
@@ -219,7 +140,7 @@ bd(나이) 10세 이상 80세 이하인 데이터만 추출
     
 결과 : rrrr_final_data.csv 데이터 개수 : 839941 -> 275465<br/><br/><br/>
 
-##### 컬럼 추가 및 제거 정리
+#### 컬럼 추가 및 제거 정리
 1. gender의 결측치가 70% 이상, 컬럼 제거
 2. end_date 와 start_date -> use_date 컬럼 추가
 3. transaction_date 값 중 max 값을 저장 
