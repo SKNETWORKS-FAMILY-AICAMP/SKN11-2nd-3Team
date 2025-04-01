@@ -261,8 +261,10 @@
 ### 인공지능 학습 결과
 
 #### 하이퍼 파라미터 (RandomSearchCV)
-- 대용량 데이터를 학습하는데 시간이 많이 소요되어 RandomSearchCV 사용
-![Image](https://github.com/user-attachments/assets/c38f7bed-00b1-4e97-9669-459c3e3aa0d9) 
+- 대용량 데이터를 학습하는데 시간이 많이 소요되어 RandomSearchCV 사용<br/>
+
+- 최적의 파라미터<br/>
+![Image](https://github.com/user-attachments/assets/841f452a-87ea-4e26-9352-06369ea47d06)  
 
 #### Model Performance (Before & After Tuning)
 
