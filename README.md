@@ -22,7 +22,7 @@
     </td>
     <td align="center">
       <a href="">
-        <img src="" width="150" alt="hyundae"/><br /><hr/>
+        <img src="./readme_img//git_img_hyeondae.png" width="150" alt="hyundae"/><br /><hr/>
         이현대
       </a><br />
     </td>
