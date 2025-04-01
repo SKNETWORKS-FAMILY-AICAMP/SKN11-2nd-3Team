@@ -246,16 +246,23 @@
 
 ### 데이터 시각화 
 
+### **is_churn 이탈 및 이탈이 아닌 값에 대한 막대 차트**
 <img src="./readme_vi//churn_non_churn.png">
 
+### **자동 갱신과 이탈의 상관 관계를 표현하기 위한 바차트**
 <img src="./readme_vi//auto_renew_vs_churn.png">
+- 자동 갱신을 사용할 수록 이탈율이 적음을 확인 할 수 있다.
 
+### **사용 기간 분포에 대한 시각화 차트**
 <img src="./readme_vi//use_date_distribution.png">
 
+### **결제 횟수 분포에 대한 시각화 차트**
 <img src="./readme_vi//transaction_count.png">
+- 결제 횟수가 많을수록 이탈자가 줄어드는 양상을 확인 할 수 있다.
 
+### **노래 재생 비율별 이탈자 상관 관계 바차트**
 <img src="./readme_vi//listen_percentage_vs_churn.png">
-
+- 해당 그래프를 통해 고객들이 노래를 끝까지 듣는지에 대한 비율과 이탈과의 상관관계는 없는 것으로 판단 된다.
      
 ---
 # 인공지능 학습 결과
@@ -268,6 +275,8 @@
 ![Image](https://github.com/user-attachments/assets/c38f7bed-00b1-4e97-9669-459c3e3aa0d9) 
 
 ![최적의 하이퍼 파라미터 결과](./readme_img/hyperparam.png)
+
+**다음과 같이 최적의 하이퍼 파라미터를 찾을 수 있었고 이를 통해 성능이 향상된 부분을 아래 표를 통해 확인 할 수 있다.**
 
 | Model               | Accuracy (Before → After) | Precision (Before → After) | Recall (Before → After) | F1 Score (Before → After) | ROC AUC (Before → After) |
 |--------------------|---------------------|----------------------|----------------|-----------------|----------------|
