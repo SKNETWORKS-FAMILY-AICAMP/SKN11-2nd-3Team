@@ -240,7 +240,7 @@
      
  -rrrr_final.py
  
- ![Image](https://github.com/user-attachments/assets/8986b43f-0997-46bb-8ff8-6f33ffddd47b)
+ <img src="./readme_vi//age_distribution.png">
  
  bd(나이) 10세 이상 80세 이하인 데이터만 추출
      
