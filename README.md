@@ -237,6 +237,14 @@ rrrr_final_data.csv 의 데이터 비율은 아래와 같다.
 | **LightGBM**          | 0.8636 → 0.8808  | 0.7794 → 0.8180  | 0.6329 → 0.6721 | 0.6985 → 0.7379  | 0.9237 → 0.9388 |
 
 
+#### 튜닝 후 모델별 성능 비교
+![Image](https://github.com/user-attachments/assets/fca649a4-26c2-49ed-9b8f-11068556577e)
+#### 튜닝 후 ROC - CURVE
+![Image](https://github.com/user-attachments/assets/798780aa-350f-4db3-9e91-d3b3eae4b690)
+#### 모델 별 예측 데이터 수 
+![Image](https://github.com/user-attachments/assets/181a7dc1-1ef8-453d-942f-55833b46a0f1) 
+
+- 평가지표, ROC - CURVE 의 결과를 토대로 최종 모델을 **RandomForest**로 선정
 
 #### 특성 중요도 
 ![Image](https://github.com/user-attachments/assets/c8f43974-9b86-41ba-b922-53192a6fec95)
