@@ -204,6 +204,9 @@ actual_amount_paid_sum 값이 0 초과인 데이터만 추출(기간 동안 총 
 결과 : final_processed_transactions.csv  데이터 개수 : 19919598 -> 1551863<br/><br/><br/>
 
 
+##### user_logs.csv 에 대한 전처리 내용 
+![Image](https://github.com/user-attachments/assets/d06ce70c-0ca1-4ef6-81e5-e041a3b0b1bf)
+
 ##### members_v3.csv 에 대한 전처리 내용 
     
 - member_preprocessing.py
