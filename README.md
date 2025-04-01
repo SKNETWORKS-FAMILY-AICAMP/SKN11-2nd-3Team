@@ -97,31 +97,7 @@
 4.  user_logs.csv / user_logs_v2.csv
 
 
-#### [ DataSet : 최종 데이터]
-| 컬럼명                   | 설명 (예상)                                                                 |
-|------------------------|---------------------------------------------------------------------------|
-| `msno`                 | 사용자 고유 ID                                                              |
-| `is_churn`             | 이탈 여부 (1: 이탈, 0: 유지)                                                 |
-| `city`                 | 사용자의 도시 (지역 정보)                                                    |
-| `bd`                   | 사용자의 나이 (birth date에서 유추)                                          |
-| `registered_via`       | 등록 경로 (앱, 웹, 페이스북 등)                                              |
-| `registration_init_time` | 가입한 날짜 (YYYYMMDD 형식)                                                |
-| `transaction_date_max` | 가장 최근 거래 날짜                                                          |
-| `transaction_count`    | 총 거래 횟수                                                                 |
-| `is_cancel_sum`        | 취소된 거래 횟수 총합                                                         |
-| `is_cancel_mean`       | 평균적으로 거래가 취소된 비율                                                 |
-| `actual_amount_paid_sum` | 실제 결제된 금액 총합                                                       |
-| `is_auto_renew_mean`   | 자동 갱신 여부 평균 (1: 자동 갱신됨, 0: 아님)                                 |
-| `payment_plan_days_sum` | 전체 결제 플랜 일수 합                                                       |
-| `start_date`           | 마지막 구독 시작일                                                           |
-| `end_date`             | 마지막 구독 종료일                                                           |
-| `num_25`               | 25% 정도 감상한 곡 수                                                         |
-| `num_50`               | 50% 정도 감상한 곡 수                                                         |
-| `num_75`               | 75% 정도 감상한 곡 수                                                         |
-| `num_985`              | 거의 끝까지 (98.5%) 감상한 곡 수                                              |
-| `num_100`              | 100% 감상한 곡 수                                                             |
-| `total_secs`           | 전체 감상 시간(초 단위)                                                       |
-| `use_date`             | 해당 사용자의 데이터가 몇 개의 날짜에 걸쳐 있는지 (사용일 수)                 |
+
 
 ### TechSet
 <p align="center">
@@ -209,14 +185,18 @@ actual_amount_paid_sum 값이 0 초과인 데이터만 추출(기간 동안 총 
 - member_preprocessing.py
 members_encoded2.csv(members_v3 파일에서 msno값을 labelencoding 한 데이터)의 데이터 개수가 6769473, 이중 gender의 결측치가  4429505 개로 확인되어 gender 컬럼 제거 
 
-결과 : final_members.csv 데이터 개수 : 6769473<br/><br/><br/>
+결과 : final_members.csv 
+
+데이터 개수 : 6769473<br/><br/><br/>
 
 
 ##### members_v3.csv + final_processed_transactions.csv 병합 후 전처리
 - merge_transac+member.py
 final_members.csv 파일과 final_processed_transactions.csv 파일을 msno를 기준으로 병합 
 
-결과 :  merged_member_transaction_data.csv 데이터 개수 : 1551864<br/><br/><br/>
+결과 :  merged_member_transaction_data.csv 
+
+데이터 개수 : 1551864<br/><br/><br/>
 
 
 - preprocessing_member_transaction.py
@@ -229,7 +209,9 @@ registration_init_time > transaction_date_max 인 데이터 제거
 -merge_final.py
 train_encoded.csv + final_merged_member_transaction_data.csv + user_logs_encoded_merged_all.csv 세 개의 파일을 'msno' 기준으로 병합
 
-결과 : realrealreal_final_data.csv  데이터 개수 : 839941<br/><br/><br/>
+결과 : realrealreal_final_data.csv  
+
+데이터 개수 : 839941<br/><br/><br/>
 
     
 -rrrr_final.py
@@ -240,6 +222,39 @@ bd(나이) 10세 이상 80세 이하인 데이터만 추출
     
 결과 : rrrr_final_data.csv 데이터 개수 : 839941 -> 275465<br/><br/><br/>
 
+##### 컬럼 추가 및 제거 정리
+1. gender의 결측치가 70% 이상, 컬럼 제거
+2. end_date 와 start_date -> use_date 컬럼 추가
+3. transaction_date 값 중 max 값을 저장 
+4. 거래 횟수 : transaction_count 컬럼 추가
+5. is_cancel 의 수 : is_cancel_sum 컬럼 추가
+6. is_cancel 의 평균 : is_cancel_mean 컬럼 추가
+7. actual_amount_paid의 총합 : actual_amount_paid_sum 컬럼 추가( 0인 값 제거)
+8. is_auto_renew 의 평균 : is_auto_renew_mean 컬럼 추가
+9. is_cancel == 0 인 데이터 필터링 -> plan_days_sum 컬럼 생성
+
+##### [ DataSet : 최종 데이터]
+| 컬럼명                   | 설명                                                                |
+|------------------------|---------------------------------------------------------------------------|
+| `msno`                 | 사용자 고유 ID                                                              |
+| `is_churn`             | 이탈 여부 (1: 이탈, 0: 유지)                                                 |
+| `city`                 | 사용자의 도시 (지역 정보)                                                    |
+| `bd`                   | 사용자의 나이 (birth date에서 유추)                                          |
+| `registered_via`       | 등록 경로 (앱, 웹, 페이스북 등)                                              |
+| `registration_init_time` | 가입한 날짜 (YYYYMMDD 형식)                                                |
+| `transaction_count`    | 총 거래 횟수                                                                 |
+| `is_cancel_mean`       | 평균적으로 거래가 취소된 비율                                                 |
+| `is_auto_renew_mean`   | 자동 갱신 여부 평균 (1: 자동 갱신됨, 0: 아님)                                 |
+| `payment_plan_days_sum` | 전체 결제 플랜 일수 합                                                       |
+| `num_25`               | 25% 정도 감상한 곡 수                                                         |
+| `num_50`               | 50% 정도 감상한 곡 수                                                         |
+| `num_75`               | 75% 정도 감상한 곡 수                                                         |
+| `num_985`              | 거의 끝까지 (98.5%) 감상한 곡 수                                              |
+| `num_100`              | 100% 감상한 곡 수                                                             |
+| `total_secs`           | 전체 감상 시간(초 단위)                                                       |
+| `use_date`             | 해당 사용자의 데이터가 몇 개의 날짜에 걸쳐 있는지 (사용일 수)                 |
+
+
 ### UnderSampling 적용 
 **오버샘플링이 아닌 언더샘플링 적용 이유**
 - 이탈 사용자의 데이터 개수가 전처리 후 25612개로 충분하다고 판단
@@ -247,18 +262,22 @@ bd(나이) 10세 이상 80세 이하인 데이터만 추출
   
 rrrr_final_data.csv 의 데이터 비율은 아래와 같다. 
     
-is_churn<br/>
-0    249853<br/>
-1     25612<br/>
+| is_churn | Count  |
+|----------|--------|
+| 0        | 249853 |
+| 1        | 25612  |
+
 
 약 10:1 로, 데이터 불균형이 상당하여 3:1로 조정하여 언더샘플링을 진행했다.<br/>
 - 판단 기준<br/>(https://www.dbpia.co.kr/journal/detail?nodeId=T15485105)<br/>(https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART001273099)<br/>
 
 -undersampling.py
   
-is_churn<br/>
-0    76836<br/>
-1    25612<br/>
+| is_churn | Count  |
+|----------|--------|
+| 0        | 76836  |
+| 1        | 25612  |
+
 
 결과 : undersampling_3_1_data.csv<br/><br/><br/>
 
@@ -289,6 +308,14 @@ is_churn<br/>
 ---
 ### 인공지능 학습 결과
 
+#### Model Performance (Before & After Tuning)
+
+| Model               | Accuracy (Before → After) | Precision (Before → After) | Recall (Before → After) | F1 Score (Before → After) | ROC AUC (Before → After) |
+|--------------------|---------------------|----------------------|----------------|-----------------|----------------|
+| **LogisticRegression** | 0.8319 → 0.8320  | 0.6814 → 0.6815  | 0.6140 → 0.6142 | 0.6459 → 0.6461  | 0.8739 → 0.8743 |
+| **RandomForest**      | 0.8601 → 0.9618  | 0.7606 → 0.9811  | 0.6416 → 0.8638 | 0.6960 → 0.9187  | 0.9190 → 0.9896 |
+| **XGBoost**           | 0.8623 → 0.8907  | 0.7565 → 0.8243  | 0.6613 → 0.7145 | 0.7057 → 0.7655  | 0.9225 → 0.9460 |
+| **LightGBM**          | 0.8636 → 0.8808  | 0.7794 → 0.8180  | 0.6329 → 0.6721 | 0.6985 → 0.7379  | 0.9237 → 0.9388 |
 
 
 
@@ -297,9 +324,16 @@ is_churn<br/>
 
 
 ---
-### Insights
+### Insights 및 결론
 
 ---
 ### 한 줄 회고
 
+| 팀원  | 한 줄 회고                 |
+|-------|----------------------------|
+| 정수  |  |
+| 현대  |  |
+| 성일  |  |
+| 장수  |  |
+| 민정  |  |
   
