@@ -33,10 +33,9 @@
 </table>
 
 ---
+##  🎯 프로젝트 개요
 ### 📅 개발 기간
 **2025.03.31 ~ 2025.04.01 (총 2일)**
-
-##  🎯 프로젝트 개요
 
 ### **프로젝트 목표**
 - KKBox(대만 음악 스트리밍 서비스) 사용자의 **이탈 여부(is_churn)** 를 예측하는 모델을 개발하여, KKBox 사용자의 이탈 방지를 효과적으로 수행하여 수익 향상에 기여함을 목적으로 함.
@@ -60,6 +59,21 @@
   - 데이터를 목적에 맞게 전처리를 진행하고 여러 모델 중 학습 후 성능이 좋은 모델을 바탕으로, 이탈 여부에 큰 영향을 미치는 feature들을 시각화(그래프 등)를 통해 확인함. 이를 통해 KKBox에 제공할 수 있는 인사이트를 도출
    
 
+
+### WBS
+
+| 내용                     | 기간                  | 담당            |
+|--------------------------|----------------------|---------------|
+| 프로젝트 주제 설정        | 25.03.31 - 25.03.31  | ALL           |
+| 데이터 수집              | 25.03.31 - 25.03.31  | ALL           |
+| 데이터 EDA     | 25.03.31 - 25.03.31  | ALL           |
+| 데이터 전처리    | 25.03.31 - 25.03.31  | ALL           |
+| 모델 선정    | 25.03.31 - 25.03.31  | ALL           |
+| 모델 학습 및 평가        | 25.03.31 - 25.04.01  | ALL |
+|  README 작성    | 25.03.31 - 25.04.01  | ALL           |
+|  발표 준비    | 25.04.01 - 25.04.01  | ALL           |
+
+<hr>
 
 ## 📂데이터 구성
 ### - 데이터소스: [WSDM - KKBox의 Churn Prediction Challenge](https://www.kaggle.com/c/kkbox-churn-prediction-challenge/overview)
@@ -122,24 +136,12 @@
 
 <hr>
 
-### WBS
-
-| 내용                     | 기간                  | 담당            |
-|--------------------------|----------------------|---------------|
-| 프로젝트 주제 설정        | 25.03.31 - 25.03.31  | ALL           |
-| 데이터 수집              | 25.03.31 - 25.03.31  | ALL           |
-| 데이터 EDA     | 25.03.31 - 25.03.31  | ALL           |
-| 데이터 전처리    | 25.03.31 - 25.03.31  | ALL           |
-| 모델 선정    | 25.03.31 - 25.03.31  | ALL           |
-| 모델 학습 및 평가        | 25.03.31 - 25.04.01  | ALL |
-|  README 작성    | 25.03.31 - 25.04.01  | ALL           |
-|  발표 준비    | 25.04.01 - 25.04.01  | ALL           |
-
 
 ### EDA
 #### 1. 데이터 전처리<br/>
 <img src="./readme_vi//box_plot_for_all.png">
-#### transaction_v2.csv 에 대한 전처리 내용
+
+## transaction_v2.csv 에 대한 전처리 내용
 ### user_log 데이터 전처리  
 1. 28GB였던 유저 로그 데이터를 1.1GB 크기의 26개 파일로 분리  
 2. member 테이블을 라벨인코딩하여 key-value 형태의 JSON으로 저장  
@@ -192,18 +194,17 @@ rrrr_final_data.csv 의 데이터 비율은 아래와 같다.
 약 10:1 로, 데이터 불균형이 상당하여 3:1로 조정하여 언더샘플링을 진행했다.<br/>
 - 판단 기준<br/>(https://www.dbpia.co.kr/journal/detail?nodeId=T15485105)<br/>(https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART001273099)<br/>
 
--undersampling.py
+undersampling.py
   
 | is_churn | Count  |
 |----------|--------|
 | 0        | 76836  |
 | 1        | 25612  |
 
-
 결과 : undersampling_3_1_data.csv<br/><br/><br/>
 
 
--undersam_preprocessing.py<br/><br/>
+undersam_preprocessing.py<br/><br/>
 'actual_amount_paid_sum'을 'transaction_count'로 나눈 새로운 컬럼 추가
 'payment_plan_days_sum'을 'transaction_count'로 나눈 새로운 컬럼 추가
 
