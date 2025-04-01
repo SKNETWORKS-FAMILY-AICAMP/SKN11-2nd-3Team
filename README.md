@@ -1,5 +1,5 @@
 # 🎵 KKBox(대만 음악 스트리밍 서비스) 사용자 이탈 예측 프로젝트
-## 3 Team
+## Member
 <table>
   <thead>
     <td align="center">
@@ -33,7 +33,7 @@
 </table>
 
 ---
-# 📅 개발 기간
+### 📅 개발 기간
 **2025.03.31 ~ 2025.04.01 (총 2일)**
 
 ##  🎯 프로젝트 개요
@@ -96,9 +96,6 @@
 4.  user_logs.csv / user_logs_v2.csv
  
 
-
-
-
 ### TechSet
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white">
@@ -111,6 +108,8 @@
   <img src="https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white">
 </p>
 <br/><br/>
+
+<hr>
 
 ### EDA
 #### 1. 데이터 전처리<br/>
