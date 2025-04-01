@@ -138,7 +138,7 @@
 
 ### EDA
 #### 1. 데이터 전처리<br/>
-![Image](https://github.com/user-attachments/assets/fe0b94b1-b6eb-49e7-aa27-33c52aac836d)
+<img src="./readme_vi//box_plot_for_all.png">
 #### transaction_v2.csv 에 대한 전처리 내용
 ### user_log 데이터 전처리  
 1. 28GB였던 유저 로그 데이터를 1.1GB 크기의 26개 파일로 분리  
