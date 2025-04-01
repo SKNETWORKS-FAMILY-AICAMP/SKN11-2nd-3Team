@@ -95,7 +95,17 @@
 
 
 4.  user_logs.csv / user_logs_v2.csv
- 
+    - **설명**: 유저의 **일일 음악 재생 로그**를 담은 데이터셋 (2017년 2월까지).
+    - **컬럼**
+      - `msno`: 유저 ID
+      - `date`:  `%Y%m%d` 형식의 날짜
+      - `num_25`: 25% 미만 청취 된 노래의 개수
+      - `num_50`: 25 ~ 50% 청취 된 노래의 개수
+      - `num_75`: 50 ~ 75% 청취 된 노래의 개수
+      - `num_985`: 75 ~ 98.5% 청취 된 노래의 개수
+      - `num_100`: 98.5~100% 청취 된 노래의 개수
+      - `num_unq`: 청취한 노래의 개수
+      - `total_secs`: 총 재생 시간(초)
 
 ### TechSet
 <p align="center">
@@ -146,7 +156,7 @@
 ### members 데이터 전처리  
 1. `gender` 컬럼의 결측치가 70% 이상으로 확인되어 컬럼 제거  
 
- ![Image](https://github.com/user-attachments/assets/9f184fff-51c9-4e01-8c83-8b6ce3146b17)
+ <img src="./readme_vi//age_distribution.png">
 
 bd(나이) 10세 이상 80세 이하인 데이터만 추출
     
@@ -222,19 +232,15 @@ rrrr_final_data.csv 의 데이터 비율은 아래와 같다.
 
 ### 데이터 시각화 
 
-![Image](https://github.com/user-attachments/assets/d37b851d-ea2d-4f75-b4f8-0e03c74b6549)
+<img src="./readme_vi//churn_non_churn.png">
 
+<img src="./readme_vi//auto_renew_vs_churn.png">
 
-![Image](https://github.com/user-attachments/assets/8ed75916-2dec-4215-99db-9093384f7128)
+<img src="./readme_vi//use_date_distribution.png">
 
+<img src="./readme_vi//transaction_count.png">
 
-![Image](https://github.com/user-attachments/assets/386f3e84-7fd4-4ff2-b51c-2e265e0ab0a0)
-
-
-![Image](https://github.com/user-attachments/assets/d21f3aeb-8f0e-42e6-871d-b6f3da89a443)
-
-
-![Image](https://github.com/user-attachments/assets/20bba289-9311-4002-834a-2dca5e4d5124)
+<img src="./readme_vi//listen_percentage_vs_churn.png">
 
      
 ---
