@@ -112,6 +112,20 @@
 
 <hr>
 
+### WBS
+
+| 내용                     | 기간                  | 담당            |
+|--------------------------|----------------------|---------------|
+| 프로젝트 주제 설정        | 25.03.31 - 25.03.31  | ALL           |
+| 데이터 수집              | 25.03.31 - 25.03.31  | ALL           |
+| 데이터 EDA     | 25.03.31 - 25.03.31  | ALL           |
+| 데이터 전처리    | 25.03.31 - 25.03.31  | ALL           |
+| 모델 선정    | 25.03.31 - 25.03.31  | ALL           |
+| 모델 학습 및 평가        | 25.03.31 - 25.04.01  | ALL |
+|  README 작성    | 25.03.31 - 25.04.01  | ALL           |
+|  발표 준비    | 25.04.01 - 25.04.01  | ALL           |
+
+
 ### EDA
 #### 1. 데이터 전처리<br/>
 ![Image](https://github.com/user-attachments/assets/fe0b94b1-b6eb-49e7-aa27-33c52aac836d)
@@ -132,9 +146,8 @@
 ### members 데이터 전처리  
 1. `gender` 컬럼의 결측치가 70% 이상으로 확인되어 컬럼 제거  
 
-<br/>
-![Image](https://github.com/user-attachments/assets/8986b43f-0997-46bb-8ff8-6f33ffddd47b)
-<br/>
+ ![Image](https://github.com/user-attachments/assets/9f184fff-51c9-4e01-8c83-8b6ce3146b17)
+
 bd(나이) 10세 이상 80세 이하인 데이터만 추출
     
 결과 : rrrr_final_data.csv 데이터 개수 : 839941 -> 275465<br/><br/><br/>
