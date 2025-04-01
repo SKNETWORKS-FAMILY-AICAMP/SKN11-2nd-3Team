@@ -22,13 +22,13 @@
     </td>
     <td align="center">
       <a href="">
-        <img src="./readme_img//git_img_hyeondae.png" width="150" alt="hyundae"/><br /><hr/>
+        <img src="./readme_img//git_img_hyeondae.png" height="150" width="150" alt="hyundae"/><br /><hr/>
         이현대
       </a><br />
     </td>
       <td align="center">
       <a href="https://github.com/minjung2266">
-        <img src="https://github.com/minjung2266.png" width="150" alt="minjeong"/><br /><hr/>
+        <img src="https://github.com/minjung2266.png" height="150" width="150" alt="minjeong"/><br /><hr/>
         이민정
       </a><br />
     </td>
