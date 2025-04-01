@@ -269,11 +269,31 @@ is_churn<br/>
 
 결과 : 2_undersampling_3_1_data.csv<br/><br/><br/>
 
+### 데이터 시각화 
+
+![Image](https://github.com/user-attachments/assets/d37b851d-ea2d-4f75-b4f8-0e03c74b6549)
+
+
+![Image](https://github.com/user-attachments/assets/8ed75916-2dec-4215-99db-9093384f7128)
+
+
+![Image](https://github.com/user-attachments/assets/386f3e84-7fd4-4ff2-b51c-2e265e0ab0a0)
+
+
+![Image](https://github.com/user-attachments/assets/d21f3aeb-8f0e-42e6-871d-b6f3da89a443)
+
+
+![Image](https://github.com/user-attachments/assets/20bba289-9311-4002-834a-2dca5e4d5124)
 
      
 ---
 ### 인공지능 학습 결과
 
+
+
+
+#### 특성 중요도 
+![Image](https://github.com/user-attachments/assets/c8f43974-9b86-41ba-b922-53192a6fec95)
 
 
 ---
