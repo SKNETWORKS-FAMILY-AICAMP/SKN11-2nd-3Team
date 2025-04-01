@@ -264,7 +264,7 @@
 - 대용량 데이터를 학습하는데 시간이 많이 소요되어 RandomSearchCV 사용
 ![Image](https://github.com/user-attachments/assets/c38f7bed-00b1-4e97-9669-459c3e3aa0d9) 
 
-#### Model Performance (Before & After Tuning)
+## RandomizedSearchCV를 사용하여 최적의 하이퍼 파라미터 확인 후 적용
 
 | Model               | Accuracy (Before → After) | Precision (Before → After) | Recall (Before → After) | F1 Score (Before → After) | ROC AUC (Before → After) |
 |--------------------|---------------------|----------------------|----------------|-----------------|----------------|
