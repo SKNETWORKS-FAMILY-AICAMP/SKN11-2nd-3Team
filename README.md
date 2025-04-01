@@ -77,9 +77,10 @@
 
 ## 📂데이터 구성
 ### - 데이터소스: [WSDM - KKBox의 Churn Prediction Challenge](https://www.kaggle.com/c/kkbox-churn-prediction-challenge/overview)
-#### [ DataSet : 전처리 전]
 
-1. members_v3.csv (유저 테이블)
+#### [ DataSet ]
+
+1. members_v3.csv [유저 테이블]
     - **설명**: 유저의 프로필 정보
     - **컬럼**
         - `msno`: 유저 ID
@@ -88,7 +89,7 @@
         - `gender`: 성별
         - `registered_via`: 가입 경로
         - `registration_init_time`: 가입 날짜 (`%Y%m%d`)
-2. train_v2.csv / train1.csv
+2. train_v2.csv [이탈 여부]
     - **설명**: 유저 ID와 이탈 여부(`is_churn`)가 포함된 학습용 데이터셋 (2017년 2월까지의 데이터 기반)
     - **컬럼**
         - `msno`: 유저 ID
@@ -98,14 +99,14 @@
     - **컬럼**
         - `msno`: 유저 ID
         - `payment_method_id`: 결제 방식 ID x
-        - `payment_plan_days`: 플랜 기간 (일 기준)   sum
-        - `plan_list_price`: 플랜 정가 (NTD)  mean/sum
-        - `actual_amount_paid`: 실제 결제 금액 (NTD). mean/sum
-        - discount_amout : 할인율 1 - (actual_amount_pain / plan_list_price).  mean/sum
+        - `payment_plan_days`: 플랜 기간 (일 기준)
+        - `plan_list_price`: 플랜 정가 (NTD)
+        - `actual_amount_paid`: 실제 결제 금액 (NTD)
         - `is_auto_renew`: 자동 갱신 여부
         - `transaction_date`: 결제 날짜 (`%Y%m%d`)
         - `membership_expire_date`: 회원 만료일 (`%Y%m%d`)
         - `is_cancel`: 구독 취소 여부
+        - discount_amout : 할인율 [1 - (actual_amount_pain / plan_list_price).  mean/sum]
 
 
 4.  user_logs.csv / user_logs_v2.csv
@@ -121,7 +122,7 @@
       - `num_unq`: 청취한 노래의 개수
       - `total_secs`: 총 재생 시간(초)
 
-### TechSet
+### 기술 스택
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white">
   <img src="https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=vscode&logoColor=white">
@@ -137,143 +138,89 @@
 <hr>
 
 ### EDA
-#### 데이터 전처리<br/>
+#### 이상치 확인
+
 <img src="./readme_vi//box_plot_for_all.png">
 
-#### user_log.csv 에 대한 데이터 전처리 내용
-1. 28GB였던 유저 로그 데이터를 1.1GB 크기의 26개 파일로 분리  
-2. member 테이블을 라벨인코딩하여 key-value 형태의 JSON으로 저장  
-3. 분리된 파일의 user_log 데이터를 `msno`를 기준으로 매핑  
-4. 각 user_log 내 중복되는 `userId(msno)`를 Groupby하여 중복 제거  
-   - 이후, `use_date`(노래를 들은 날짜), `start_date`(처음 들은 날), `end_date`(마지막 들은 날) 컬럼 추가  
-5. 모든 user_log를 하나로 합친 후 다시 Groupby하여 4번과 동일한 과정 진행  
+# 전처리
 
- #### transaction_v2.csv 에 대한 전처리 내용
- - transaction_date_check.py
-   
- 캐글의 데이터 설명에 명시된 내용을 보면 transaction.csv 파일은 2017년 02월 28일 까지의 거래 기록, transaction_v2.csv 파일은 그 이후로 2017년 03월 31일 까지의 거래 기록으로 확인된다.<br/>
- 하지만 transaction_v2.csv 파일의 'transaction_date' 컬럼을 보면 거래일자가 20170228~20170331 이외의 데이터들이 섞여있어서 이상치로 판단 후 제거<br/>
+## members_v3.csv [유저]  
+ 1. 모든 테이블에 msno (userId값)이 암호화된 텍스트로 되어 있기 때문에 데이터의 크기가 커짐.
+ 2. 데이터의 크기를 줄이기 위해 msno 컬럼의 값을 Label 인코딩을 통해 1부터 시작하는 Int 자료형으로 변경.
+ 3. 변경된 데이터를 이전 값을 key 이후 값을 value로 가지는 json 형태로 저장
+ 
+## user_log.csv 에 대한 데이터 전처리
+  1. 28GB의 데이터를 한번에 처리 불가능. => 메모리 문제
+  2. 1500만 row씩[1.1GB] 26개 파일로 분리
+  3. 분리된 파일의 user_log 데이터를 `msno`를 기준으로 Json 파일을 활용해 매핑  
+  4. 각 user_log 내 중복되는 `userId(msno)`를 Groupby하여 중복 제거  
+  5. `use_date`(노래를 시청 날짜), `start_date`(처음 시청한 날), `end_date`(마지막 시청한 날) 컬럼 추가  
+  6. 모든 user_log를 하나로 합친 후 다시 Groupby하여 5번과 동일한 과정 진행  
+
+## transaction [결제 이력] 
+
+  1. label.json을 바탕으로 transaction 파일의 msno 값을 인코딩
+  2. transaction에는 member에는 없는 유저를 결측치로 판단하여 제거
+  3. 데이터 컬럼 명세를 바탕으로 각 사용자별 결제 데이터를 하나의 row로 시계열 데이터로 저장됨을 확인.
+  4. v1과 v2의 차이는 2017년 2월 28일을 기준으로 전후 데이터 이면 v2는 2017년 3월 31일 까지의 거래 기록.
+  5. v2에서 transaction_date 컬럼의 거래 일자에 2017년 2월 28일 이전 데이터를 확인 하여 해당 데이터를 이상치로 판단 하여 제거함.
+  6. pandas의 concat를 활용하여 v1 v2 결합
+  7. transaction_date(결제 날짜)가 membership_expire_date(멤버십 만료 날짜) 보다 큰 값은 결제를 했지만 맴버십 날짜가 갱신되지 않은 데이터라고 판단하여 이상치 데이터로 제거.
+  8. payment_list_price(정가) 보다 actual_amount_paid(실 구매가) 가 큰 데이터 들은 이상치라고 판단하여 제거 
+  9. payment_plan_id (결제 방식)에 대한 값은 숫자로 되어 있고 해당 값이 어떤걸 의미하는지에 대한 인사이트를 뽑을 수 없기 때문에 해당 컬럼 제거
+  10. actual_amount_paid의 값이 0인 데이터를 제거
+  11. 거래 횟수를 저장해두는 transaction_count 컬럼 생성.
+  12. is_cancel == 0 인 데이터만 필터링하여 plan_days_sum 컬럼 생성 (구독 취소하는 경우의 plan_days를 세지 않기 위함)
+  13. transaction_date 값 중 max 값을 저장.
+  14. is_cancel 의 수를 저장해두는 is_cancel_sum 컬럼 생성
+  15. is_cancel 의 평균을 저장해두는 is_cancel_mean 컬럼 생성
+  16. actual_amount_paid의 총합을 저장하는 actual_amount_paid_sum 컬럼 생성
+  17. is_auto_renew 의 평균을 저장한 is_auto_renew_mean 컬럼 생성
+  18. _sum 값이 0인 유저는 결제 했지만 0원
+  19. actual_amount_paid_sum(실 결제 가격)을 transaction_count(결제 횟수)로 나눈 새로운 컬럼 추가
+  20. payment_plan_days_sum을 transaction_count로 나눈 새로운 컬럼 추가
      
- 결과 : filtered_transactions_v2.csv 데이터 개수 : 1431009  -> 1150924<br/><br/><br/>
+## 유저 데이터와 결제 데이터 병합(transaction + members)
+1. final_members.csv 파일과 final_processed_transactions.csv 파일을 msno를 기준으로 병합 
+2. registration_init_time(플랫폼 가입 날짜)가 transaction_date_max(마지막 결제일)보다 일찍 결제한 데이터는 해당 사용자가 가입 이전에 결제를 할 수 없기 때문에 해당 데이터를 이상치로 판단하여 삭제
  
- - labelmapping.py
- 
- msno 값을 label 인코딩 해둔 members_encoded.csv 파일을 불러와 filtered_transactions_v2.csv 파일에 적용하여<br/>
- msno 값을 숫자로 변환하고, members_v3.csv (유저정보) 에 없는 msno 값을 가진 데이터를 제거<br/>
- 
- 결과 : filter_and_labeled_transactions_v2.csv 데이터 개수 : 1150924 -> 1027895<br/><br/><br/>
- 
-     
- ##### transaction.csv 에 대한 전처리 내용 
- - labelmapping.py
- msno 값을 label 인코딩 해둔 members_encoded.csv 파일을 불러와 filtered_transactions.csv 파일에 적용<br/>
- msno 값을 숫자로 변환하고, members_v3.csv (유저정보) 에 없는 msno 값을 가진 데이터를 제거<br/>
- 
- 결과 : labeled_transactions.csv 데이터 개수 : 21547745 -> 18891703<br/><br/><br/>
- 
- 
- - concat.py
-     
- filter_and_labeled_transactions_v2.csv 와 labeled_transactions.csv 를 concat<br/>
-     
- 결과 : merged_transactions.csv 데이터 개수 : 1027895 + 18891703 -> 19919598<br/><br/><br/>
- 
- 
- - merged_transactions_preprocessing.py
- 
- merged_transactions.csv 에서 transaction_date 가 membership_expire_date 보다 큰 값(이상치) 제거. 
- 
- 결과 :  final_merged_transactions.csv 데이터 개수 : 19919598  -> 19779157<br/><br/><br/>
- 
- 
- - transaction_processing.py
-     
- final_merged_transactions.csv 에서 msno_encoded의 타입을 int 형으로 바꾸고 컬럼명을 'msno'로 저장 후, msno_encoded 컬럼 제거.
- 
- merged_transactions.csv 파일의 컬럼 중.<br/>
- 1)payment_list_price 보다 actual_amount_paid 가 큰 데이터 들을 제거<br/>
- 2)payment_plan_id 컬럼 제거<br/>
-  
- msno_encoded를 기준으로 그룹화 해서
- 
- 0)transaction_date 값 중 max 값을 저장. <br/>
- 1)거래 횟수를 저장해두는 transaction_count 컬럼 생성<br/>
- 2)is_cancel 의 수를 저장해두는 is_cancel_sum 컬럼 생성<br/>
- 3)is_cancel 의 평균을 저장해두는 is_cancel_mean 컬럼 생성<br/>
- 4)actual_amount_paid의 총합을 저장하는 actual_amount_paid_sum 컬럼 생성<br/>
- 5)is_auto_renew 의 평균을 저장한 is_auto_renew_mean 컬럼 생성<br/>
- 6)is_cancel == 0 인 데이터만 필터링하여 plan_days_sum 컬럼 생성 (구독 취소하는 경우의 plan_days를 세지 않기 위함)<br/>
- 
- 추가)  
- actual_amount_paid_sum 값이 0 초과인 데이터만 추출(기간 동안 총 결제 금액이 0인 유저 제거 위함)
-     
- 결과 : final_processed_transactions.csv  데이터 개수 : 19919598 -> 1551863<br/><br/><br/>
- 
- 
- ##### members_v3.csv 에 대한 전처리 내용 
-     
- - member_preprocessing.py
- members_encoded2.csv(members_v3 파일에서 msno값을 labelencoding 한 데이터)의 데이터 개수가 6769473, 이중 gender의 결측치가  4429505 개로 확인되어 gender 컬럼 제거 
- 
- 결과 : final_members.csv 데이터 개수 : 6769473<br/><br/><br/>
- 
- 
- ##### members_v3.csv + final_processed_transactions.csv 병합 후 전처리
- - merge_transac+member.py
- final_members.csv 파일과 final_processed_transactions.csv 파일을 msno를 기준으로 병합 
- 
- 결과 :  merged_member_transaction_data.csv 데이터 개수 : 1551864<br/><br/><br/>
- 
- 
- - preprocessing_member_transaction.py
- registration_init_time > transaction_date_max 인 데이터 제거 
- 
- 결과 :  데이터 개수 : 1551863 -> 1340063<br/><br/><br/>
- 
- 
- ##### train_encoded.csv + final_merged_member_transaction_data.csv + user_logs_encoded_merged_all.csv 병합
- -merge_final.py
- train_encoded.csv + final_merged_member_transaction_data.csv + user_logs_encoded_merged_all.csv 세 개의 파일을 'msno' 기준으로 병합
- 
- 결과 : realrealreal_final_data.csv  데이터 개수 : 839941<br/><br/><br/>
- 
-     
- -rrrr_final.py
- 
- <img src="./readme_vi//age_distribution.png">
- 
- bd(나이) 10세 이상 80세 이하인 데이터만 추출
-     
- 결과 : rrrr_final_data.csv 데이터 개수 : 839941 -> 275465<br/><br/><br/>
- 
- ### UnderSampling 적용 
+## 전체 파일 병합
+1. train_encoded.csv + final_merged_member_transaction_data.csv + user_logs_encoded_merged_all.csv 세 개의 파일을 'msno' 기준으로 병합
+2. 고객의 나이를 10 ~ 80세 사이로 전처리
+
+
+# 최종 데이터 파일    
+## [최종 데이터 파일 31.5MB](./data/rrrr_final_data.csv)
+
+# UnderSampling 적용 
+
+| **UnderSampling 적용 전** |          |
+|---------------------------|----------|
+| is_churn (이탈)           | count    |
+|---------------------------|----------|
+| 0                         | 249853   |
+| 1                         | 25612    |
+
+```위 데이터를 바탕으로 이탈(1)과 이탈이 아닌(0) 데이터의 데이터 불균형이 10배 차이가 발생하는데 이를 해결하기 위한 방법으로 Under 샘플링을 적용.```
+
  **오버샘플링이 아닌 언더샘플링 적용 이유**
- - 이탈 사용자의 데이터 개수가 전처리 후 25612개로 충분하다고 판단
- - 오버샘플링을 하며 인위적인 데이터를 만드는 것보다 원본 데이터를 유지하며 학습하는 것이 더 신뢰도가 있을 것이라 판단<br/><br/>
-   
- rrrr_final_data.csv 의 데이터 비율은 아래와 같다. 
-     
- is_churn<br/>
- 0    249853<br/>
- 1     25612<br/>
+ 1. 이탈 사용자의 데이터 개수가 전처리 후 25612개로 충분하다고 판단
+ 2. 오버샘플링을 하며 인위적인 데이터를 만드는 것보다 원본 데이터를 유지하며 학습하는 것이 더 신뢰도가 있을 것이라 판단하였고 약 10:1 를 보이는 데이터 불균형을 언더 샘플링을 통해 3:1로 조정.
+
+ **UnderSampling 적용 후**
+ | **UnderSampling 적용 전** |          |
+|---------------------------|----------|
+| is_churn (이탈)           | count    |
+|---------------------------|----------|
+| 0               | 76836  |
+| 1               | 25612   |
+
+
+
+## 판단 기준
+1. [최적 샘플링 비율 탐색을 통한 불균형 자료 문제 해결 방안](https://www.dbpia.co.kr/journal/detail?nodeId=T15485105)
+2. [불균형 데이터에 대한 오버샘플링 효과 연구](https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART001273099)
  
- 약 10:1 로, 데이터 불균형이 상당하여 3:1로 조정하여 언더샘플링을 진행했다.<br/>
- - 판단 기준<br/>(https://www.dbpia.co.kr/journal/detail?nodeId=T15485105)<br/>(https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART001273099)<br/>
- 
- -undersampling.py
-   
- is_churn<br/>
- 0    76836<br/>
- 1    25612<br/>
- 
- 결과 : undersampling_3_1_data.csv<br/><br/><br/>
- 
- 
- -undersam_preprocessing.py<br/><br/>
- 'actual_amount_paid_sum'을 'transaction_count'로 나눈 새로운 컬럼 추가
- 'payment_plan_days_sum'을 'transaction_count'로 나눈 새로운 컬럼 추가
- 
- 결과 : 2_undersampling_3_1_data.csv<br/><br/><br/>
 
 
 ##### [ DataSet : 최종 데이터]
